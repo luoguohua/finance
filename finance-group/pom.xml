@@ -31,6 +31,7 @@
         <hutool-all.version>5.7.5</hutool-all.version>
         <oauth2.version>2.2.4.RELEASE</oauth2.version>
         <security.version>2.2.4.RELEASE</security.version>
+        <knife4j.version>2.0.9</knife4j.version>
     </properties>
 
     <dependencyManagement>
@@ -50,6 +51,11 @@
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-security</artifactId>
                 <version>${security.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

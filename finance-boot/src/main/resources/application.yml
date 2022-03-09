@@ -18,3 +18,13 @@ spring:
         max-active: 2000
         max-wait: 10000
     timeout: 5000
+
+finance:
+  auth:
+    accessTokenValiditySeconds: 86400
+    refreshTokenValiditySeconds: 86400
+    clients:
+      - client: finance
+        secret: 123456
+        grantType: password,refresh_token
+        scope: all

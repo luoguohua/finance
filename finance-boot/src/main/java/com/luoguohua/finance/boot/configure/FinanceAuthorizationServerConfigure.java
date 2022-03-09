@@ -1,6 +1,11 @@
 package com.luoguohua.finance.boot.configure;
 
+import cn.hutool.core.util.ArrayUtil;
+import cn.hutool.core.util.StrUtil;
+import com.luoguohua.finance.boot.properties.AuthProperties;
+import com.luoguohua.finance.boot.properties.ClientsProperties;
 import com.luoguohua.finance.boot.system.service.FinanceUserDetailService;
+import com.luoguohua.finance.boot.translator.FinanceWebResponseExceptionTranslator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,6 +13,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.config.annotation.builders.InMemoryClientDetailsServiceBuilder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -37,7 +43,13 @@ public class FinanceAuthorizationServerConfigure extends AuthorizationServerConf
     private FinanceUserDetailService financeUserDetailService;
 
     @Autowired
+    private FinanceWebResponseExceptionTranslator financeWebResponseExceptionTranslator;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private AuthProperties authProperties;
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
@@ -46,11 +58,23 @@ public class FinanceAuthorizationServerConfigure extends AuthorizationServerConf
          * 2.该client_id支持password模式获取令牌，并且可以通过refresh_token来获取新的令牌；
          * 3.在获取client_id为febs的令牌的时候，scope只能指定为all，否则将获取失败；
          */
-        clients.inMemory()
-                .withClient("finance")
-                .secret(passwordEncoder.encode("123456"))
-                .authorizedGrantTypes("password", "refresh_token")
-                .scopes("all");
+        ClientsProperties[] clientsProperties = authProperties.getClients();
+        InMemoryClientDetailsServiceBuilder builder = clients.inMemory();
+        if(ArrayUtil.isNotEmpty(clients)){
+            for (ClientsProperties properties:clientsProperties){
+                if(StrUtil.isBlank(properties.getClient())){
+                    throw new Exception("client不能为空");
+                }
+                if(StrUtil.isBlank(properties.getSecret())){
+                    throw new Exception("secret不能为空");
+                }
+                String[] grantTypes = StrUtil.splitToArray(properties.getGrantType(),",");
+                builder.withClient(properties.getClient())
+                        .secret(passwordEncoder.encode(properties.getSecret()))
+                        .authorizedGrantTypes(grantTypes)
+                        .scopes(properties.getScope());
+            }
+        }
     }
 
     @Override
@@ -58,7 +82,8 @@ public class FinanceAuthorizationServerConfigure extends AuthorizationServerConf
         endpoints.tokenStore(tokenStore())
                 .userDetailsService(financeUserDetailService)
                 .authenticationManager(authenticationManager)
-                .tokenServices(defaultTokenServices());
+                .tokenServices(defaultTokenServices())
+                .exceptionTranslator(financeWebResponseExceptionTranslator);
     }
 
     /**
@@ -78,9 +103,9 @@ public class FinanceAuthorizationServerConfigure extends AuthorizationServerConf
         // 开启令牌刷新
         tokenServices.setSupportRefreshToken(true);
         // 令牌有效期
-        tokenServices.setAccessTokenValiditySeconds(60 * 60 * 24);
+        tokenServices.setAccessTokenValiditySeconds(authProperties.getAccessTokenValiditySeconds());
         // 刷新令牌有效期
-        tokenServices.setRefreshTokenValiditySeconds(60 * 60 * 24 * 7);
+        tokenServices.setRefreshTokenValiditySeconds(authProperties.getRefreshTokenValiditySeconds());
         return tokenServices;
     }
 
