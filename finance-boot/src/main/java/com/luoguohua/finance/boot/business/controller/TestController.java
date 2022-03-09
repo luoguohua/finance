@@ -1,7 +1,9 @@
 package com.luoguohua.finance.boot.business.controller;
 
 import com.luoguohua.finance.common.pojo.vo.FinanceResponse;
-import org.springframework.web.bind.annotation.RequestMapping;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -11,11 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
  * Content:
  */
 @RestController
+@Api(tags = "测试模块")
 public class TestController {
 
-
-    @RequestMapping("/business/test")
-    public FinanceResponse bussiness(){
+    @ApiOperation(value = "业务测试")
+    @GetMapping("/business/test")
+    public FinanceResponse business(){
         return new FinanceResponse().data("操作成功");
     }
 }

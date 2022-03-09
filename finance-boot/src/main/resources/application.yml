@@ -28,3 +28,15 @@ finance:
         secret: 123456
         grantType: password,refresh_token
         scope: all
+  system:
+    anonUrl: /doc.html,/webjars/**,/swagger-resources/**,/v2/api-docs/**,/favicon.ico
+    swagger:
+      author: luoguohua
+      basePackage: com.luoguohua.finance.boot
+      description: Finance API.
+      email: luoguohua_163@qq.com
+      license: Apache 2.0
+      licenseUrl: https://www.apache.org/licenses/LICENSE-2.0.html
+      title: Finance API.
+      url: https://luoguohua.github.io/
+      version: 1.0
