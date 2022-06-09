@@ -10,7 +10,7 @@
     <packaging>pom</packaging>
 
     <name>FINANCE-group</name>
-    <description>FINANCE-group：Spring Cloud，Spring Security OAuth2 微服务权限管理系统</description>
+    <description>FINANCE-group：Spring boot，Spring Security OAuth2权限管理系统</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -22,6 +22,7 @@
     <modules>
         <module>../finance-common</module>
         <module>../finance-boot</module>
+        <module>../finance-system</module>
     </modules>
 
     <properties>
@@ -32,6 +33,9 @@
         <oauth2.version>2.2.4.RELEASE</oauth2.version>
         <security.version>2.2.4.RELEASE</security.version>
         <knife4j.version>2.0.9</knife4j.version>
+        <mp.version>3.1.2</mp.version>
+        <dbsource.version>2.5.4</dbsource.version>
+        <connector.version>8.0.28</connector.version>
     </properties>
 
     <dependencyManagement>
@@ -56,6 +60,22 @@
                 <groupId>com.github.xiaoymin</groupId>
                 <artifactId>knife4j-spring-boot-starter</artifactId>
                 <version>${knife4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mp.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+                <version>${dbsource.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${connector.version}</version>
+                <scope>runtime</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>

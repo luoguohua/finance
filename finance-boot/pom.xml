@@ -19,7 +19,7 @@
     <dependencies>
         <dependency>
             <groupId>com.luoguohua</groupId>
-            <artifactId>finance-common</artifactId>
+            <artifactId>finance-system</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>

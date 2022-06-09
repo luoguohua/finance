@@ -38,7 +38,7 @@ public class UserController {
     @ApiOperation(value = "退出登录")
     public FinanceResponse signout(HttpServletRequest request) throws FinanceAuthException {
         String authorization = request.getHeader("Authorization");
-        String token = StrUtil.replace(authorization, "bearer ", "");
+        String token = StrUtil.replace(authorization, "Bearer ", "");
         FinanceResponse financeResponse = new FinanceResponse();
         if (!consumerTokenServices.revokeToken(token)) {
             throw new FinanceAuthException("退出登录失败");

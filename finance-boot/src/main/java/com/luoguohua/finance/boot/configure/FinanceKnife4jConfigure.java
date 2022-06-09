@@ -5,6 +5,7 @@ import com.luoguohua.finance.boot.properties.SystemProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.oauth2.provider.endpoint.FrameworkEndpoint;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -37,7 +38,8 @@ public class FinanceKnife4jConfigure {
                 //分组名称
                 .select()
                 //这里指定Controller扫描包路径
-                .apis(RequestHandlerSelectors.basePackage(swaggerProperties.getBasePackage()))
+                .apis(RequestHandlerSelectors.basePackage(swaggerProperties.getBasePackage())
+                        .or(RequestHandlerSelectors.withClassAnnotation(FrameworkEndpoint.class)))
                 .paths(PathSelectors.any())
                 .build();
         return docket;
