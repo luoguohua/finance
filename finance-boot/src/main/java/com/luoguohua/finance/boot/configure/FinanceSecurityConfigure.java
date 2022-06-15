@@ -1,6 +1,7 @@
 package com.luoguohua.finance.boot.configure;
 
 import cn.hutool.core.util.StrUtil;
+import com.luoguohua.finance.boot.filter.ValidateCodeFilter;
 import com.luoguohua.finance.boot.properties.SystemProperties;
 import com.luoguohua.finance.boot.system.service.FinanceUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * @Version 1.0
@@ -27,6 +29,9 @@ public class FinanceSecurityConfigure extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private FinanceUserDetailService financeUserDetailService;
+
+    @Autowired
+    private ValidateCodeFilter validateCodeFilter;
 
 
     @Bean
@@ -61,7 +66,9 @@ public class FinanceSecurityConfigure extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         String[] anonUrls = StrUtil.splitToArray(properties.getAnonUrl(), ",");
-        http.requestMatchers().antMatchers("/oauth/**")
+        // ValidateCodeFilter过滤器添加到了UsernamePasswordAuthenticationFilter过滤器前
+        http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
+                .requestMatchers().antMatchers("/oauth/**")
                 .and().authorizeRequests()
                 .antMatchers(anonUrls).anonymous()
                 .antMatchers("/oauth/**").authenticated()

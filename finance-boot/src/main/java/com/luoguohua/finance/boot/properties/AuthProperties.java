@@ -18,4 +18,9 @@ public class AuthProperties {
     private ClientsProperties[] clients = {};
     private int accessTokenValiditySeconds = 60 * 60 * 24;
     private int refreshTokenValiditySeconds = 60 * 60 * 24 * 7;
+
+    /**
+     * 验证码配置
+     */
+    private ValidateCodeProperties code = new ValidateCodeProperties();
 }

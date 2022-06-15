@@ -10,17 +10,15 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>FINANCE-system</artifactId>
+    <artifactId>finance-system</artifactId>
+    <name>FINANCE-system</name>
+    <description>FINANCE-system系统模块</description>
 
     <dependencies>
         <dependency>
             <groupId>com.luoguohua</groupId>
             <artifactId>finance-common</artifactId>
             <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>com.baomidou</groupId>

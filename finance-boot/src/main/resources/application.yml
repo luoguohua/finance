@@ -11,7 +11,7 @@ spring:
     database: 0
     host: 192.168.14.2
     port: 6379
-    jedis:
+    lettuce:
       pool:
         min-idle: 8
         max-idle: 500
@@ -33,7 +33,8 @@ spring:
           username: root
           password: root
           driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://localhost:3306/finance?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2b8
+          url: jdbc:mysql://192.168.14.2:3306/finance?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2b8
+      p6spy: true
 
 mybatis-plus:
   type-aliases-package: com.luoguohua.finance.**.po
@@ -43,6 +44,11 @@ mybatis-plus:
   global-config:
     banner: false
 
+logging:
+  level:
+    com.luoguohua.finance: DEBUG
+  file:
+    path: D://${spring.application.name}/logs
 
 finance:
   auth:
@@ -53,11 +59,17 @@ finance:
         secret: 123456
         grantType: password,refresh_token
         scope: all
+    code:
+      enable: true
+      time: 120
+      width: 115
+      height: 42
+      length: 4
   system:
-    anonUrl: /doc.html,/webjars/**,/swagger-resources/**,/v2/api-docs/**,/favicon.ico
+    anonUrl: /doc.html,/webjars/**,/swagger-resources/**,/v2/api-docs/**,/favicon.ico,/captcha
     swagger:
       author: luoguohua
-      basePackage: com.luoguohua.finance.boot
+      basePackage: com.luoguohua.finance.boot,com.luoguohua.finance.system
       description: Finance API.
       email: luoguohua_163@qq.com
       license: Apache 2.0

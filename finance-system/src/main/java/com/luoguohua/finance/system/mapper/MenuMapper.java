@@ -14,4 +14,12 @@ import java.util.List;
 public interface MenuMapper  extends BaseMapper<SysMenu> {
 
     List<SysMenu> findUserPermissions(String username);
+
+    /**
+     * 通过用户名查询菜单信息
+     *
+     * @param username 用户名
+     * @return 菜单信息
+     */
+    List<SysMenu> findUserMenus(String username);
 }

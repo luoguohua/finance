@@ -1,10 +1,16 @@
 package com.luoguohua.finance.boot.configure;
 
+import com.baomidou.mybatisplus.core.parser.ISqlParser;
+import com.baomidou.mybatisplus.extension.parsers.BlockAttackSqlParser;
+import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Version 1.0
@@ -53,5 +59,14 @@ public class FinanceWebMvcConfig {
         corsConfigurationSource.registerCorsConfiguration("/**", config);
         //返回CorsFilter
         return new CorsFilter(corsConfigurationSource);
+    }
+
+    @Bean
+    public PaginationInterceptor paginationInterceptor() {
+        PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
+        List<ISqlParser> sqlParserList = new ArrayList<>();
+        sqlParserList.add(new BlockAttackSqlParser());
+        paginationInterceptor.setSqlParserList(sqlParserList);
+        return paginationInterceptor;
     }
 }

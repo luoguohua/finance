@@ -1,6 +1,6 @@
 package com.luoguohua.finance.boot.handler;
 
-import com.luoguohua.finance.boot.utils.FinanceUtils;
+import com.luoguohua.finance.common.utils.FinanceUtils;
 import com.luoguohua.finance.common.pojo.vo.FinanceResponse;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.AuthenticationException;
