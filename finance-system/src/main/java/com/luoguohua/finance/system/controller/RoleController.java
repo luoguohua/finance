@@ -1,6 +1,7 @@
 package com.luoguohua.finance.system.controller;
 
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
+import com.luoguohua.finance.common.annotation.ControllerEndpoint;
 import com.luoguohua.finance.common.pojo.vo.FinanceResponse;
 import com.luoguohua.finance.common.pojo.vo.QueryRequest;
 import com.luoguohua.finance.common.utils.FinanceUtils;
@@ -50,12 +51,14 @@ public class RoleController {
 
     @PostMapping
     @PreAuthorize("hasAuthority('role:add')")
+    @ControllerEndpoint(operation = "新增角色", exceptionMessage = "新增角色失败")
     public void addRole(@Valid Role role) {
         this.roleService.createRole(role);
     }
 
     @DeleteMapping("/{roleIds}")
     @PreAuthorize("hasAuthority('role:delete')")
+    @ControllerEndpoint(operation = "删除角色", exceptionMessage = "删除角色失败")
     public void deleteRoles(@NotBlank(message = "{required}") @PathVariable String roleIds) {
         String[] ids = roleIds.split(StringPool.COMMA);
         this.roleService.deleteRoles(ids);
@@ -63,6 +66,7 @@ public class RoleController {
 
     @PutMapping
     @PreAuthorize("hasAuthority('role:update')")
+    @ControllerEndpoint(operation = "修改角色", exceptionMessage = "修改角色失败")
     public void updateRole(@Valid Role role) {
         this.roleService.updateRole(role);
     }

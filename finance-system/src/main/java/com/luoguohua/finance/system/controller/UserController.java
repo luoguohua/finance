@@ -1,6 +1,7 @@
 package com.luoguohua.finance.system.controller;
 
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
+import com.luoguohua.finance.common.annotation.ControllerEndpoint;
 import com.luoguohua.finance.common.exception.FinanceException;
 import com.luoguohua.finance.common.pojo.vo.FinanceResponse;
 import com.luoguohua.finance.common.pojo.vo.QueryRequest;
@@ -102,12 +103,14 @@ public class UserController {
 
     @PostMapping
     @PreAuthorize("hasAuthority('user:add')")
+    @ControllerEndpoint(operation = "新增用户", exceptionMessage = "新增用户失败")
     public void addUser(@Valid SysUser user) {
         this.userService.createUser(user);
     }
 
     @PutMapping
     @PreAuthorize("hasAuthority('user:update')")
+    @ControllerEndpoint(operation = "修改用户", exceptionMessage = "修改用户失败")
     public void updateUser(@Valid SysUser user) {
         this.userService.updateUser(user);
     }
@@ -121,12 +124,14 @@ public class UserController {
 
     @DeleteMapping("/{userIds}")
     @PreAuthorize("hasAuthority('user:delete')")
+    @ControllerEndpoint(operation = "删除用户", exceptionMessage = "删除用户失败")
     public void deleteUsers(@NotBlank(message = "{required}") @PathVariable String userIds) {
         String[] ids = userIds.split(StringPool.COMMA);
         this.userService.deleteUsers(ids);
     }
 
     @PutMapping("profile")
+    @ControllerEndpoint(exceptionMessage = "修改个人信息失败")
     public void updateProfile(@Valid SysUser user) throws FinanceException {
         this.userService.updateProfile(user);
     }
@@ -137,6 +142,7 @@ public class UserController {
     }
 
     @PutMapping("avatar")
+    @ControllerEndpoint(exceptionMessage = "修改头像失败")
     public void updateAvatar(@NotBlank(message = "{required}") String avatar) {
         this.userService.updateAvatar(avatar);
     }
@@ -149,12 +155,14 @@ public class UserController {
     }
 
     @PutMapping("password")
+    @ControllerEndpoint(exceptionMessage = "修改密码失败")
     public void updatePassword(@NotBlank(message = "{required}") String password) {
         userService.updatePassword(password);
     }
 
     @PutMapping("password/reset")
     @PreAuthorize("hasAuthority('user:reset')")
+    @ControllerEndpoint(exceptionMessage = "重置用户密码失败")
     public void resetPassword(@NotBlank(message = "{required}") String usernames) {
         String[] usernameArr = usernames.split(StringPool.COMMA);
         this.userService.resetPassword(usernameArr);

@@ -1,6 +1,7 @@
 package com.luoguohua.finance.system.controller;
 
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
+import com.luoguohua.finance.common.annotation.ControllerEndpoint;
 import com.luoguohua.finance.common.pojo.vo.FinanceResponse;
 import com.luoguohua.finance.common.router.VueRouter;
 import com.luoguohua.finance.system.po.SysMenu;
@@ -64,12 +65,14 @@ public class MenuController {
 
     @PostMapping
     @PreAuthorize("hasAuthority('menu:add')")
+    @ControllerEndpoint(operation = "新增菜单/按钮", exceptionMessage = "新增菜单/按钮失败")
     public void addMenu(@Valid SysMenu menu) {
         this.menuService.createMenu(menu);
     }
 
     @DeleteMapping("/{menuIds}")
     @PreAuthorize("hasAuthority('menu:delete')")
+    @ControllerEndpoint(operation = "删除菜单/按钮", exceptionMessage = "删除菜单/按钮失败")
     public void deleteMenus(@NotBlank(message = "{required}") @PathVariable String menuIds) {
         String[] ids = menuIds.split(StringPool.COMMA);
         this.menuService.deleteMenus(ids);
@@ -77,6 +80,7 @@ public class MenuController {
 
     @PutMapping
     @PreAuthorize("hasAuthority('menu:update')")
+    @ControllerEndpoint(operation = "修改菜单/按钮", exceptionMessage = "修改菜单/按钮失败")
     public void updateMenu(@Valid SysMenu menu) {
         this.menuService.updateMenu(menu);
     }

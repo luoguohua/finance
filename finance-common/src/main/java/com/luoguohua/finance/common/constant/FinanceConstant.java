@@ -31,4 +31,9 @@ public interface FinanceConstant {
      * 注册用户角色ID
      */
     Long REGISTER_ROLE_ID = 2L;
+
+    /**
+     * 异步线程池名称
+     */
+    String ASYNC_POOL = "financeAsyncThreadPool";
 }

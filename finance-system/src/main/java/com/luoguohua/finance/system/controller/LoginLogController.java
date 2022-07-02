@@ -1,6 +1,7 @@
 package com.luoguohua.finance.system.controller;
 
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
+import com.luoguohua.finance.common.annotation.ControllerEndpoint;
 import com.luoguohua.finance.common.pojo.vo.FinanceResponse;
 import com.luoguohua.finance.common.pojo.vo.QueryRequest;
 import com.luoguohua.finance.common.utils.FinanceUtils;
@@ -41,6 +42,7 @@ public class LoginLogController {
 
     @DeleteMapping("{ids}")
     @PreAuthorize("hasAuthority('loginlog:delete')")
+    @ControllerEndpoint(operation = "删除登录日志", exceptionMessage = "删除登录日志失败")
     public void deleteLogs(@NotBlank(message = "{required}") @PathVariable String ids) {
         String[] loginLogIds = ids.split(StringPool.COMMA);
         this.loginLogService.deleteLoginLogs(loginLogIds);

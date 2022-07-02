@@ -1,6 +1,7 @@
 package com.luoguohua.finance.system.controller;
 
 import cn.hutool.core.text.StrPool;
+import com.luoguohua.finance.common.annotation.ControllerEndpoint;
 import com.luoguohua.finance.common.pojo.vo.FinanceResponse;
 import com.luoguohua.finance.common.pojo.vo.QueryRequest;
 import com.luoguohua.finance.system.po.SysDept;
@@ -37,19 +38,22 @@ public class DeptController {
 
     @PostMapping
     @PreAuthorize("hasAuthority('dept:add')")
+    @ControllerEndpoint(operation = "新增部门", exceptionMessage = "新增部门失败")
     public void addDept(@Valid SysDept dept) {
         this.deptService.createSysDept(dept);
     }
 
     @DeleteMapping("/{deptIds}")
     @PreAuthorize("hasAuthority('dept:delete')")
-    public void deleteDepts(@NotBlank(message = "{required}") @PathVariable String deptIds) {
+    @ControllerEndpoint(operation = "删除部门", exceptionMessage = "删除部门失败")
+    public void deleteDepartments(@NotBlank(message = "{required}") @PathVariable String deptIds) {
         String[] ids = deptIds.split(StrPool.COMMA);
         this.deptService.deleteSysDepartments(ids);
     }
 
     @PutMapping
     @PreAuthorize("hasAuthority('dept:update')")
+    @ControllerEndpoint(operation = "修改部门", exceptionMessage = "修改部门失败")
     public void updateDept(@Valid SysDept dept) {
         this.deptService.updateSysDept(dept);
     }
