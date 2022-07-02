@@ -1,5 +1,6 @@
 package com.luoguohua.finance.common.utils;
 
+import com.luoguohua.finance.common.pojo.dto.Tree;
 import com.luoguohua.finance.common.router.VueRouter;
 
 import java.util.ArrayList;
@@ -55,5 +56,42 @@ public class TreeUtil {
 
         topRoutes.add(router404);
         return topRoutes;
+    }
+
+    /**
+     * 用于构建菜单或部门树
+     *
+     * @param nodes nodes
+     * @return <T> List<? extends Tree>
+     */
+    public static <T> List<? extends Tree<?>> build(List<? extends Tree<T>> nodes) {
+        if (nodes == null) {
+            return null;
+        }
+        List<Tree<T>> topNodes = new ArrayList<>();
+        nodes.forEach(node -> {
+            String pid = node.getParentId();
+            if (pid == null || TOP_NODE_ID.equals(pid)) {
+                topNodes.add(node);
+                return;
+            }
+            for (Tree<T> n : nodes) {
+                String id = n.getId();
+                if (id != null && id.equals(pid)) {
+                    if (n.getChildren() == null) {
+                        n.initChildren();
+                    }
+                    n.getChildren().add(node);
+                    node.setHasParent(true);
+                    n.setHasChildren(true);
+                    n.setHasParent(true);
+                    return;
+                }
+            }
+            if (topNodes.isEmpty()) {
+                topNodes.add(node);
+            }
+        });
+        return topNodes;
     }
 }

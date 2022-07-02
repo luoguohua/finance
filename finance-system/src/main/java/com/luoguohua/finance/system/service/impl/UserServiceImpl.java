@@ -6,9 +6,12 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.luoguohua.finance.common.exception.FinanceException;
+import com.luoguohua.finance.common.pojo.dto.CurrentUser;
 import com.luoguohua.finance.common.pojo.vo.QueryRequest;
 import com.luoguohua.finance.common.router.RouterMeta;
 import com.luoguohua.finance.common.router.VueRouter;
+import com.luoguohua.finance.common.utils.FinanceUtils;
 import com.luoguohua.finance.common.utils.TreeUtil;
 import com.luoguohua.finance.system.mapper.MenuMapper;
 import com.luoguohua.finance.system.mapper.UserMapper;
@@ -25,10 +28,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -94,5 +94,79 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SysUser> implements
             ur.setRoleId(Long.valueOf(roleId));
             userRoleService.save(ur);
         });
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateLoginTime(String username) {
+        SysUser user = new SysUser();
+        user.setLastLoginTime(new Date());
+        this.baseMapper.update(user, new LambdaQueryWrapper<SysUser>().eq(SysUser::getUsername, username));
+    }
+
+    @Override
+    public IPage<SysUser> findUserDetailList(SysUser user, QueryRequest request) {
+        Page<SysUser> page = new Page<>(request.getPageNum(), request.getPageSize());
+        return this.baseMapper.findUserDetailPage(page, user);
+    }
+
+    @Override
+    public SysUser findByName(String username) {
+        LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysUser::getUsername, username);
+        return this.baseMapper.selectOne(queryWrapper);
+    }
+
+    @Override
+    public void updateProfile(SysUser user) throws FinanceException {
+        user.setPassword(null);
+        user.setUsername(null);
+        user.setStatus(null);
+        if (isCurrentUser(user.getUserId())) {
+            updateById(user);
+        } else {
+            throw new FinanceException("您无权修改别人的账号信息！");
+        }
+    }
+
+    private boolean isCurrentUser(Long id) {
+        CurrentUser currentUser = FinanceUtils.getCurrentUser();
+        return currentUser != null && id.equals(currentUser.getUserId());
+    }
+
+    @Override
+    public void updateSidebarTheme(String theme) {
+        CurrentUser currentUser = FinanceUtils.getCurrentUser();
+        if (currentUser != null) {
+            Long userId = currentUser.getUserId();
+            SysUser user = new SysUser();
+            user.setUserId(userId);
+            user.setTheme(theme);
+            baseMapper.updateById(user);
+        }
+    }
+
+    @Override
+    public void updateAvatar(String avatar) {
+        SysUser user = new SysUser();
+        user.setAvatar(avatar);
+        String currentUsername = FinanceUtils.getCurrentUsername();
+        this.baseMapper.update(user, new LambdaQueryWrapper<SysUser>().eq(SysUser::getUsername, currentUsername));
+    }
+
+    @Override
+    public void updatePassword(String password) {
+        SysUser user = new SysUser();
+        user.setPassword(passwordEncoder.encode(password));
+        String currentUsername = FinanceUtils.getCurrentUsername();
+        this.baseMapper.update(user, new LambdaQueryWrapper<SysUser>().eq(SysUser::getUsername, currentUsername));
+    }
+
+    @Override
+    public void resetPassword(String[] userNames) {
+        SysUser params = new SysUser();
+        params.setPassword(passwordEncoder.encode(SysUser.DEFAULT_PASSWORD));
+        List<String> list = Arrays.asList(userNames);
+        this.baseMapper.update(params, new LambdaQueryWrapper<SysUser>().in(SysUser::getUsername, list));
     }
 }

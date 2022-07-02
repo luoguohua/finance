@@ -26,4 +26,6 @@ public class RouterMeta implements Serializable {
      * 图标
      */
     private String icon;
+
+    private Boolean breadcrumb = true;
 }

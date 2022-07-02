@@ -7,18 +7,28 @@ package com.luoguohua.finance.common.constant;
  * Content:
  * 全局常量类
  */
-public class FinanceConstant {
+public interface FinanceConstant {
     /**
      * gif类型
      */
-    public static final String GIF = "gif";
+    String GIF = "gif";
     /**
      * png类型
      */
-    public static final String PNG = "png";
+    String PNG = "png";
 
     /**
      * 验证码 key前缀
      */
-    public static final String CODE_PREFIX = "finance.captcha.";
+    String CODE_PREFIX = "finance.captcha.";
+
+    /**
+     * Java默认临时目录
+     */
+    String JAVA_TEMP_DIR = "java.io.tmpdir";
+
+    /**
+     * 注册用户角色ID
+     */
+    Long REGISTER_ROLE_ID = 2L;
 }

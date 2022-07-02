@@ -1,9 +1,11 @@
 package com.luoguohua.finance.boot.configure;
 
-import cn.hutool.core.util.StrUtil;
 import com.luoguohua.finance.boot.filter.ValidateCodeFilter;
+import com.luoguohua.finance.boot.handler.FinanceWebLoginFailureHandler;
+import com.luoguohua.finance.boot.handler.FinanceWebLoginSuccessHandler;
 import com.luoguohua.finance.boot.properties.SystemProperties;
 import com.luoguohua.finance.boot.system.service.FinanceUserDetailService;
+import com.luoguohua.finance.common.constant.EndpointConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
@@ -32,6 +34,11 @@ public class FinanceSecurityConfigure extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private ValidateCodeFilter validateCodeFilter;
+
+    @Autowired
+    private FinanceWebLoginSuccessHandler successHandler;
+    @Autowired
+    private FinanceWebLoginFailureHandler failureHandler;
 
 
     @Bean
@@ -65,14 +72,21 @@ public class FinanceSecurityConfigure extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        String[] anonUrls = StrUtil.splitToArray(properties.getAnonUrl(), ",");
-        // ValidateCodeFilter过滤器添加到了UsernamePasswordAuthenticationFilter过滤器前
         http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
-                .requestMatchers().antMatchers("/oauth/**")
-                .and().authorizeRequests()
-                .antMatchers(anonUrls).anonymous()
-                .antMatchers("/oauth/**").authenticated()
-                .and().csrf().disable();
+                .requestMatchers()
+                .antMatchers(EndpointConstant.OAUTH_ALL, EndpointConstant.LOGIN)
+                .and()
+                .authorizeRequests()
+                .antMatchers(EndpointConstant.OAUTH_ALL).authenticated()
+                .and()
+                .formLogin()
+                .loginPage(EndpointConstant.LOGIN)
+                .loginProcessingUrl(EndpointConstant.LOGIN)
+                .successHandler(successHandler)
+                .failureHandler(failureHandler)
+                .permitAll()
+                .and().csrf().disable()
+                .httpBasic().disable();
     }
 
     @Override

@@ -142,4 +142,9 @@ public class SysUser implements Serializable {
 
     @TableField(exist = false)
     private String roleName;
+
+    /**
+     * 侧栏主题
+     */
+    private String theme;
 }

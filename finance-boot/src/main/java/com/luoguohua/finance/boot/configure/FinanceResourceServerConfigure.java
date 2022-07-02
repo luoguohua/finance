@@ -1,6 +1,7 @@
 package com.luoguohua.finance.boot.configure;
 
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.luoguohua.finance.boot.handler.FinanceAccessDeniedHandler;
 import com.luoguohua.finance.boot.handler.FinanceAuthExceptionEntryPoint;
 import com.luoguohua.finance.boot.properties.SystemProperties;
@@ -33,7 +34,7 @@ public class FinanceResourceServerConfigure extends ResourceServerConfigurerAdap
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        String[] anonUrls = StrUtil.splitToArray(properties.getAnonUrl(), ",");
+        String[] anonUrls = StrUtil.split(properties.getAnonUrl(), StringPool.COMMA);
         http.csrf().disable().requestMatchers().antMatchers("/**")
                 .and().authorizeRequests()
                 .antMatchers(anonUrls)

@@ -24,6 +24,8 @@ public class SysMenu implements Serializable {
     // 按钮
     public static final String TYPE_BUTTON = "1";
 
+    public static final Long TOP_MENU_ID = 0L;
+
     /**
      * 菜单/按钮ID
      */
