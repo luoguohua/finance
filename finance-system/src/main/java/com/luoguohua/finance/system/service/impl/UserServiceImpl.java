@@ -1,6 +1,7 @@
 package com.luoguohua.finance.system.service.impl;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.crypto.digest.MD5;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
@@ -165,8 +166,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SysUser> implements
     @Override
     public void resetPassword(String[] userNames) {
         SysUser params = new SysUser();
-        params.setPassword(passwordEncoder.encode(SysUser.DEFAULT_PASSWORD));
+        params.setPassword(passwordEncoder.encode(MD5.create().digestHex(SysUser.DEFAULT_PASSWORD)));
         List<String> list = Arrays.asList(userNames);
         this.baseMapper.update(params, new LambdaQueryWrapper<SysUser>().in(SysUser::getUsername, list));
     }
+
 }

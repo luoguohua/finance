@@ -60,6 +60,6 @@ public class ValidateCodeFilter extends OncePerRequestFilter {
     private void validateCode(HttpServletRequest httpServletRequest) throws ValidateCodeException {
         String code = httpServletRequest.getParameter("code");
         String key = httpServletRequest.getParameter("key");
-//        validateCodeService.check(key, code);
+        validateCodeService.check(key, code);
     }
 }
