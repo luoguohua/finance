@@ -23,6 +23,7 @@
         <module>../finance-common</module>
         <module>../finance-boot</module>
         <module>../finance-system</module>
+        <module>../finance-business</module>
     </modules>
 
     <properties>
@@ -33,7 +34,7 @@
         <oauth2.version>2.2.4.RELEASE</oauth2.version>
         <security.version>2.2.4.RELEASE</security.version>
         <knife4j.version>3.0.3</knife4j.version>
-        <mp.version>3.1.2</mp.version>
+        <mp.version>3.3.0</mp.version>
         <dbsource.version>2.5.4</dbsource.version>
         <connector.version>8.0.28</connector.version>
         <logstash.version>5.2</logstash.version>
