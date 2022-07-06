@@ -26,7 +26,21 @@ public class LedgerTest extends FinanceBootApplicationTests {
         Ledger ledger = new Ledger();
         ledger.setLedgerName("默认账本");
         ledger.setAssessedMonthlyIncome(new BigDecimal("10000"));
-        ledger.setCreateTime(DateUtil.date());
         ledgerService.save(ledger);
     }
+
+    @Test
+    public void testUpdate(){
+        Ledger ledger = new Ledger();
+        ledger.setId(2L);
+        ledger.setLedgerName("默认账本2");
+        ledger.setAssessedMonthlyIncome(new BigDecimal("10000"));
+        ledgerService.saveOrUpdate(ledger);
+    }
+
+    @Test
+    public void testDelete(){
+        ledgerService.removeById(2L);
+    }
+
 }
