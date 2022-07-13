@@ -24,10 +24,15 @@ public class LedgerController {
     @Autowired
     private ILedgerService ledgerService;
 
-    @GetMapping
+    @GetMapping("/list")
     public FinanceResponse ledgerList(Ledger ledger, QueryRequest request) {
-        Map<String, Object> dataTable = FinanceUtils.getDataTable(this.ledgerService.findLedgers(ledger, request));
+        Map<String, Object> dataTable = FinanceUtils.getDataTable(this.ledgerService.findLedgerPages(ledger, request));
         return new FinanceResponse().data(dataTable);
+    }
+
+    @GetMapping
+    public FinanceResponse ledgerList(Ledger ledger) {
+        return new FinanceResponse().data(this.ledgerService.findLedgers(ledger));
     }
 
 }

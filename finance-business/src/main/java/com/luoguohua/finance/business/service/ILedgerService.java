@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.luoguohua.finance.business.po.Ledger;
 import com.luoguohua.finance.common.pojo.vo.QueryRequest;
 
+import java.util.List;
+
 /**
  * @Version 1.0
  * @Author: luoguohua
@@ -15,10 +17,17 @@ public interface ILedgerService extends IService<Ledger> {
 
 
     /**
-     * 列表查询
+     * 列表查询(分页)
      * @param ledger
      * @param request
      * @return
      */
-    IPage<Ledger> findLedgers(Ledger ledger, QueryRequest request);
+    IPage<Ledger> findLedgerPages(Ledger ledger, QueryRequest request);
+
+    /**
+     * 列表查询(不分页)
+     * @param ledger
+     * @return
+     */
+    List<Ledger> findLedgers(Ledger ledger);
 }

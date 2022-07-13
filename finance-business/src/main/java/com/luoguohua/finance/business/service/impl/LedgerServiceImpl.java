@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * @Version 1.0
  * @Author: luoguohua
@@ -27,7 +29,7 @@ public class LedgerServiceImpl extends ServiceImpl<LedgerMapper, Ledger> impleme
 
 
     @Override
-    public IPage<Ledger> findLedgers(Ledger ledger, QueryRequest request) {
+    public IPage<Ledger> findLedgerPages(Ledger ledger, QueryRequest request) {
         QueryWrapper<Ledger> queryWrapper = new QueryWrapper<>();
 
         if (StrUtil.isNotBlank(ledger.getLedgerName())) {
@@ -36,5 +38,16 @@ public class LedgerServiceImpl extends ServiceImpl<LedgerMapper, Ledger> impleme
         queryWrapper.lambda().orderByDesc(Ledger::getCreateTime);
         Page<Ledger> page = new Page<>(request.getPageNum(), request.getPageSize());
         return this.page(page, queryWrapper);
+    }
+
+    @Override
+    public List<Ledger> findLedgers(Ledger ledger) {
+        QueryWrapper<Ledger> queryWrapper = new QueryWrapper<>();
+
+        if (StrUtil.isNotBlank(ledger.getLedgerName())) {
+            queryWrapper.lambda().like(Ledger::getLedgerName,ledger.getLedgerName());
+        }
+        queryWrapper.lambda().orderByDesc(Ledger::getCreateTime);
+        return this.list(queryWrapper);
     }
 }
