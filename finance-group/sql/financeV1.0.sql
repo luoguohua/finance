@@ -11,7 +11,7 @@
  Target Server Version : 80029
  File Encoding         : 65001
 
- Date: 05/07/2022 13:43:32
+ Date: 15/07/2022 18:56:55
 */
 
 SET NAMES utf8mb4;
@@ -55,7 +55,7 @@ CREATE TABLE `sys_dept`  (
   `CREATE_TIME` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `MODIFY_TIME` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`DEPT_ID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '部门表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '部门表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_dept
@@ -78,12 +78,17 @@ CREATE TABLE `sys_log`  (
   `location` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '操作地点',
   PRIMARY KEY (`ID`) USING BTREE,
   INDEX `sys_log_create_time`(`CREATE_TIME`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户操作日志表' ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户操作日志表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_log
 -- ----------------------------
 INSERT INTO `sys_log` VALUES (1, 'luoguohua', '删除菜单/按钮', 43, 'com.luoguohua.finance.system.controller.MenuController.deleteMenus()', ' menuIds: \"173,156,183,154,168\"', '172.20.0.32', '2022-07-04 16:42:42', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `sys_log` VALUES (2, 'luoguohua', '新增菜单/按钮', 20, 'com.luoguohua.finance.system.controller.MenuController.addMenu()', ' menu: \"SysMenu(menuId=195, parentId=0, menuName=账本管理, path=/ledger, component=Layout, perms=, icon=el-icon-notebook-2, type=0, orderNum=0, createTime=Wed Jul 06 16:49:08 CST 2022, modifyTime=null, createTimeFrom=null, createTimeTo=null)\"', '172.20.0.36', '2022-07-06 16:49:09', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `sys_log` VALUES (3, 'luoguohua', '修改菜单/按钮', 17, 'com.luoguohua.finance.system.controller.MenuController.updateMenu()', ' menu: \"SysMenu(menuId=1, parentId=0, menuName=系统管理, path=/system, component=Layout, perms=null, icon=el-icon-set-up, type=0, orderNum=99, createTime=null, modifyTime=Wed Jul 06 16:49:19 CST 2022, createTimeFrom=null, createTimeTo=null)\"', '172.20.0.36', '2022-07-06 16:49:19', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `sys_log` VALUES (4, 'luoguohua', '新增菜单/按钮', 14, 'com.luoguohua.finance.system.controller.MenuController.addMenu()', ' menu: \"SysMenu(menuId=196, parentId=195, menuName=我的账本, path=/ledger, component=febs/ledger/my/Index, perms=ledger:view, icon=, type=0, orderNum=0, createTime=Wed Jul 06 16:53:47 CST 2022, modifyTime=null, createTimeFrom=null, createTimeTo=null)\"', '172.20.0.36', '2022-07-06 16:53:48', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `sys_log` VALUES (5, 'luoguohua', '修改角色', 39, 'com.luoguohua.finance.system.controller.RoleController.updateRole()', ' role: \"Role(roleId=1, roleName=null, remark=管理员, createTime=null, modifyTime=Wed Jul 06 16:54:35 CST 2022, menuIds=135,195,196,1,2,13,12,11,10,136,24,4,131,16,15,14,150,151,152,5,18,132,19,17,6,133,22,21,20,163,164,165,166,167)\"', '172.20.0.36', '2022-07-06 16:54:36', '内网IP|0|0|内网IP|内网IP');
+INSERT INTO `sys_log` VALUES (6, 'luoguohua', '修改菜单/按钮', 13, 'com.luoguohua.finance.system.controller.MenuController.updateMenu()', ' menu: \"SysMenu(menuId=196, parentId=195, menuName=我的账本, path=/ledger-list, component=febs/ledger/my/Index, perms=ledger:view, icon=, type=0, orderNum=0, createTime=null, modifyTime=Wed Jul 06 17:21:32 CST 2022, createTimeFrom=null, createTimeTo=null)\"', '172.20.0.36', '2022-07-06 17:21:32', '内网IP|0|0|内网IP|内网IP');
 
 -- ----------------------------
 -- Table structure for sys_login_log
@@ -99,7 +104,7 @@ CREATE TABLE `sys_login_log`  (
   `BROWSER` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '浏览器',
   PRIMARY KEY (`ID`) USING BTREE,
   INDEX `sys_login_log_login_time`(`LOGIN_TIME`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '登录日志表' ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '登录日志表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_login_log
@@ -109,6 +114,8 @@ INSERT INTO `sys_login_log` VALUES (2, 'luoguohua', '2022-07-02 14:42:20', '内�
 INSERT INTO `sys_login_log` VALUES (3, 'luoguohua', '2022-07-04 16:10:09', '内网IP|0|0|内网IP|内网IP', '172.20.0.32', 'Windows 10', 'Chrome 10');
 INSERT INTO `sys_login_log` VALUES (4, 'luoguohua', '2022-07-04 16:35:37', '内网IP|0|0|内网IP|内网IP', '172.20.0.32', 'Windows 10', 'Chrome 10');
 INSERT INTO `sys_login_log` VALUES (5, 'luoguohua', '2022-07-04 16:41:49', '内网IP|0|0|内网IP|内网IP', '172.20.0.32', 'Windows 10', 'Chrome 10');
+INSERT INTO `sys_login_log` VALUES (6, 'luoguohua', '2022-07-06 16:38:30', '内网IP|0|0|内网IP|内网IP', '172.20.0.36', 'Windows 10', 'Chrome 10');
+INSERT INTO `sys_login_log` VALUES (7, 'luoguohua', '2022-07-13 11:43:53', '内网IP|0|0|内网IP|内网IP', '127.0.0.1', 'Windows 10', 'Chrome 10');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -127,12 +134,12 @@ CREATE TABLE `sys_menu`  (
   `CREATE_TIME` datetime(0) NOT NULL COMMENT '创建时间',
   `MODIFY_TIME` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`MENU_ID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 195 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '菜单表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 196 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '菜单表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_menu
 -- ----------------------------
-INSERT INTO `sys_menu` VALUES (1, 0, '系统管理', '/system', 'Layout', NULL, 'el-icon-set-up', '0', 1, '2017-12-27 16:39:07', '2019-07-20 16:19:04');
+INSERT INTO `sys_menu` VALUES (1, 0, '系统管理', '/system', 'Layout', NULL, 'el-icon-set-up', '0', 99, '2017-12-27 16:39:07', '2022-07-06 16:49:19');
 INSERT INTO `sys_menu` VALUES (2, 1, '用户管理', '/system/user', 'febs/system/user/Index', 'user:view', '', '0', 1, '2017-12-27 16:47:13', '2019-01-22 06:45:55');
 INSERT INTO `sys_menu` VALUES (4, 1, '角色管理', '/system/role', 'febs/system/role/Index', 'role:view', '', '0', 2, '2017-12-27 16:48:09', '2018-04-25 09:01:12');
 INSERT INTO `sys_menu` VALUES (5, 1, '菜单管理', '/system/menu', 'febs/system/menu/Index', 'menu:view', '', '0', 3, '2017-12-27 16:48:57', '2018-04-25 09:01:30');
@@ -165,6 +172,8 @@ INSERT INTO `sys_menu` VALUES (164, 163, '新增', NULL, NULL, 'client:add', NUL
 INSERT INTO `sys_menu` VALUES (165, 163, '修改', NULL, NULL, 'client:update', NULL, '1', NULL, '2019-09-26 22:58:43', NULL);
 INSERT INTO `sys_menu` VALUES (166, 163, '删除', NULL, NULL, 'client:delete', NULL, '1', NULL, '2019-09-26 22:58:55', NULL);
 INSERT INTO `sys_menu` VALUES (167, 163, '解密', NULL, NULL, 'client:decrypt', NULL, '1', NULL, '2019-09-26 22:59:08', NULL);
+INSERT INTO `sys_menu` VALUES (195, 0, '账本管理', '/ledger', 'Layout', '', 'el-icon-notebook-2', '0', 0, '2022-07-06 16:49:09', NULL);
+INSERT INTO `sys_menu` VALUES (196, 195, '我的账本', '/ledger-list', 'febs/ledger/my/Index', 'ledger:view', '', '0', 0, '2022-07-06 16:53:48', '2022-07-06 17:21:32');
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -177,12 +186,12 @@ CREATE TABLE `sys_role`  (
   `CREATE_TIME` datetime(0) NOT NULL COMMENT '创建时间',
   `MODIFY_TIME` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`ROLE_ID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '角色表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
-INSERT INTO `sys_role` VALUES (1, '管理员', '管理员', '2019-08-08 16:23:11', '2019-08-09 14:38:59');
+INSERT INTO `sys_role` VALUES (1, '管理员', '管理员', '2019-08-08 16:23:11', '2022-07-06 16:54:36');
 
 -- ----------------------------
 -- Table structure for sys_role_menu
@@ -196,74 +205,40 @@ CREATE TABLE `sys_role_menu`  (
 -- ----------------------------
 -- Records of sys_role_menu
 -- ----------------------------
+INSERT INTO `sys_role_menu` VALUES (1, 135);
+INSERT INTO `sys_role_menu` VALUES (1, 195);
+INSERT INTO `sys_role_menu` VALUES (1, 196);
 INSERT INTO `sys_role_menu` VALUES (1, 1);
 INSERT INTO `sys_role_menu` VALUES (1, 2);
-INSERT INTO `sys_role_menu` VALUES (1, 3);
-INSERT INTO `sys_role_menu` VALUES (1, 4);
-INSERT INTO `sys_role_menu` VALUES (1, 5);
-INSERT INTO `sys_role_menu` VALUES (1, 6);
-INSERT INTO `sys_role_menu` VALUES (1, 10);
-INSERT INTO `sys_role_menu` VALUES (1, 11);
-INSERT INTO `sys_role_menu` VALUES (1, 12);
 INSERT INTO `sys_role_menu` VALUES (1, 13);
-INSERT INTO `sys_role_menu` VALUES (1, 14);
-INSERT INTO `sys_role_menu` VALUES (1, 15);
-INSERT INTO `sys_role_menu` VALUES (1, 16);
-INSERT INTO `sys_role_menu` VALUES (1, 17);
-INSERT INTO `sys_role_menu` VALUES (1, 18);
-INSERT INTO `sys_role_menu` VALUES (1, 19);
-INSERT INTO `sys_role_menu` VALUES (1, 20);
-INSERT INTO `sys_role_menu` VALUES (1, 21);
-INSERT INTO `sys_role_menu` VALUES (1, 22);
-INSERT INTO `sys_role_menu` VALUES (1, 24);
-INSERT INTO `sys_role_menu` VALUES (1, 130);
-INSERT INTO `sys_role_menu` VALUES (1, 131);
-INSERT INTO `sys_role_menu` VALUES (1, 132);
-INSERT INTO `sys_role_menu` VALUES (1, 133);
-INSERT INTO `sys_role_menu` VALUES (1, 135);
+INSERT INTO `sys_role_menu` VALUES (1, 12);
+INSERT INTO `sys_role_menu` VALUES (1, 11);
+INSERT INTO `sys_role_menu` VALUES (1, 10);
 INSERT INTO `sys_role_menu` VALUES (1, 136);
+INSERT INTO `sys_role_menu` VALUES (1, 24);
+INSERT INTO `sys_role_menu` VALUES (1, 4);
+INSERT INTO `sys_role_menu` VALUES (1, 131);
+INSERT INTO `sys_role_menu` VALUES (1, 16);
+INSERT INTO `sys_role_menu` VALUES (1, 15);
+INSERT INTO `sys_role_menu` VALUES (1, 14);
 INSERT INTO `sys_role_menu` VALUES (1, 150);
 INSERT INTO `sys_role_menu` VALUES (1, 151);
 INSERT INTO `sys_role_menu` VALUES (1, 152);
-INSERT INTO `sys_role_menu` VALUES (1, 154);
-INSERT INTO `sys_role_menu` VALUES (1, 155);
-INSERT INTO `sys_role_menu` VALUES (1, 156);
-INSERT INTO `sys_role_menu` VALUES (1, 157);
-INSERT INTO `sys_role_menu` VALUES (1, 158);
-INSERT INTO `sys_role_menu` VALUES (1, 159);
-INSERT INTO `sys_role_menu` VALUES (1, 160);
+INSERT INTO `sys_role_menu` VALUES (1, 5);
+INSERT INTO `sys_role_menu` VALUES (1, 18);
+INSERT INTO `sys_role_menu` VALUES (1, 132);
+INSERT INTO `sys_role_menu` VALUES (1, 19);
+INSERT INTO `sys_role_menu` VALUES (1, 17);
+INSERT INTO `sys_role_menu` VALUES (1, 6);
+INSERT INTO `sys_role_menu` VALUES (1, 133);
+INSERT INTO `sys_role_menu` VALUES (1, 22);
+INSERT INTO `sys_role_menu` VALUES (1, 21);
+INSERT INTO `sys_role_menu` VALUES (1, 20);
 INSERT INTO `sys_role_menu` VALUES (1, 163);
 INSERT INTO `sys_role_menu` VALUES (1, 164);
 INSERT INTO `sys_role_menu` VALUES (1, 165);
 INSERT INTO `sys_role_menu` VALUES (1, 166);
 INSERT INTO `sys_role_menu` VALUES (1, 167);
-INSERT INTO `sys_role_menu` VALUES (1, 168);
-INSERT INTO `sys_role_menu` VALUES (1, 169);
-INSERT INTO `sys_role_menu` VALUES (1, 170);
-INSERT INTO `sys_role_menu` VALUES (1, 171);
-INSERT INTO `sys_role_menu` VALUES (1, 172);
-INSERT INTO `sys_role_menu` VALUES (1, 173);
-INSERT INTO `sys_role_menu` VALUES (1, 174);
-INSERT INTO `sys_role_menu` VALUES (1, 175);
-INSERT INTO `sys_role_menu` VALUES (1, 176);
-INSERT INTO `sys_role_menu` VALUES (1, 177);
-INSERT INTO `sys_role_menu` VALUES (1, 178);
-INSERT INTO `sys_role_menu` VALUES (1, 179);
-INSERT INTO `sys_role_menu` VALUES (1, 180);
-INSERT INTO `sys_role_menu` VALUES (1, 181);
-INSERT INTO `sys_role_menu` VALUES (1, 182);
-INSERT INTO `sys_role_menu` VALUES (1, 183);
-INSERT INTO `sys_role_menu` VALUES (1, 184);
-INSERT INTO `sys_role_menu` VALUES (1, 185);
-INSERT INTO `sys_role_menu` VALUES (1, 186);
-INSERT INTO `sys_role_menu` VALUES (1, 187);
-INSERT INTO `sys_role_menu` VALUES (1, 188);
-INSERT INTO `sys_role_menu` VALUES (1, 189);
-INSERT INTO `sys_role_menu` VALUES (1, 190);
-INSERT INTO `sys_role_menu` VALUES (1, 191);
-INSERT INTO `sys_role_menu` VALUES (1, 192);
-INSERT INTO `sys_role_menu` VALUES (1, 193);
-INSERT INTO `sys_role_menu` VALUES (1, 194);
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -286,12 +261,12 @@ CREATE TABLE `sys_user`  (
   `AVATAR` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '头像',
   `DESCRIPTION` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
   PRIMARY KEY (`USER_ID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '用户表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 'luoguohua', '$2a$10$HBzeo/9EMTORRoX7JT9/We3Sz1xL7yNZNkhz57RMrJ2p.HIBj178e', 1, '503153198@qq.com', '17788888888', '1', '2019-06-14 20:39:22', '2019-07-19 10:18:36', '2022-07-04 16:41:49', '0', NULL, NULL, 'default.jpg', '我是帅比作者。');
+INSERT INTO `sys_user` VALUES (1, 'luoguohua', '$2a$10$HBzeo/9EMTORRoX7JT9/We3Sz1xL7yNZNkhz57RMrJ2p.HIBj178e', 1, '503153198@qq.com', '17788888888', '1', '2019-06-14 20:39:22', '2019-07-19 10:18:36', '2022-07-13 11:43:53', '0', NULL, NULL, 'default.jpg', '我是帅比作者。');
 INSERT INTO `sys_user` VALUES (2, '测试用户', '$2a$10$qnkX7Vk8UnK.dpzGve3XHu0h9IOUsgnHQDpZ075wudZ8FGZPvj8vW', 1, '503153198@qq.com', '13800138000', '1', '2022-07-02 15:43:44', NULL, NULL, '2', NULL, NULL, 'default.jpg', NULL);
 
 -- ----------------------------
@@ -355,11 +330,12 @@ CREATE TABLE `t_ledger`  (
   `create_time` datetime(0) NOT NULL COMMENT '创建时间',
   `modify_time` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户操作日志表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户操作日志表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of t_ledger
 -- ----------------------------
+INSERT INTO `t_ledger` VALUES (1, '默认账本', 10000.00, '2022-07-05 14:06:23', NULL);
 
 -- ----------------------------
 -- Table structure for t_ledger_budget_category
